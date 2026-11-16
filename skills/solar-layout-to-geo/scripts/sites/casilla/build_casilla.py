@@ -19,9 +19,9 @@ from pvgeo import writers
 from pvgeo.transform import fit
 from pvgeo.rollup import rollup
 
-SRC = Path("/home/claude/casilla/src/casilla.pdf")
-W = Path("/home/claude/casilla")
-OUT = Path("/home/claude/casilla/out/casilla")
+SRC = Path(os.environ.get("CASILLA_PDF", "src/casilla.pdf"))
+W = Path(os.environ.get("CASILLA_WORK", "."))   # p37.pkl, trackers.pkl, anchor.json
+OUT = Path(os.environ.get("CASILLA_OUT", "out/casilla"))
 PAGE = 37
 C = 2.29284                    # m per pt, model viewport measure (1:6,500)
 CRS = "EPSG:25829"             # ETRS89 / UTM 29N (Valencina, west of 6° W)

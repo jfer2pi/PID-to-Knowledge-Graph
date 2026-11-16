@@ -1,7 +1,9 @@
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pickle, numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from shapely.ops import unary_union
-A=pickle.load(open('/home/claude/casilla/assembled.pkl','rb')); F=A['feats']
+A=pickle.load(open(os.path.join(os.environ.get('CASILLA_WORK', '.'), 'assembled.pkl'),'rb')); F=A['feats']
 import build_casilla as B
 feats,rows,tot,notes,anchor=B.main()
 F=feats
@@ -28,4 +30,4 @@ ax,ay=anchor['anchor_frame_m']; u,v=f(ax,ay); d.ellipse([u-7,v-7,u+7,v+7],outlin
 d.text((12,8),f"Casilla Solar PV: {tot['trackers']:,} trackers (2P, 84 modules), {tot['strings']:,} strings of 28 (derived), 14 CT; shaded = station areas",fill=(0,0,0,255),font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',13))
 u,v=20,Hd-25; d.line([u,v,u+200*S,v],fill=(0,0,0,255),width=3); d.text((u,v-16),'200 m',fill=(0,0,0,255))
 d.polygon([(Wd-30,40),(Wd-38,62),(Wd-22,62)],fill=(0,0,0,255)); d.text((Wd-35,18),'N',fill=(0,0,0,255),font=fb)
-im.convert('RGB').save('/home/claude/casilla/out/casilla/qa/preview.jpg',quality=88)
+im.convert('RGB').save(os.path.join(os.environ.get('CASILLA_OUT', 'out/casilla'), 'qa/preview.jpg'),quality=88)
