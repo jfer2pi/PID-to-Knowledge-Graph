@@ -1,6 +1,6 @@
 # Lessons from real documents
 
-Read this before starting on a new site. It holds what the first four sites taught, as rules to apply and as checks for what went wrong.
+Read this before starting on a new site. It holds what the first five sites taught, as rules to apply and as checks for what went wrong.
 
 ## Contents
 1. Triage: which route a document needs
@@ -95,11 +95,20 @@ Learned on the route D site (ten *Cableado corriente continua (BT) CTIN-nn* shee
 - **Area polygons per combiner (and circuit, inverter)** are worth adding when strings are rectangles: union of the group's tables, closed at a radius just over half the row gap (2.1 m for a 4.03 m gap), clipped so they never cover another group's table. Keep a group split by an aisle or by another board's table as a multipart polygon rather than painting over the gap.
 - **A sheet's view shows its neighbours' tables.** After assembly, drop a table whose centre lies outside its own key-plan block and inside another (one on the route D site; every station then had the same number of).
 
+## 5b2. Route A with tracker outlines per station layer (Casilla)
+
+- **One layer per CT, trackers as outline boxes with module cross-lines** (`0_CT Nº1` … `Nº14`). Count trackers from the boxes (the loose verticals are torque tubes, not sides), and modules from the cross-lines: 41 lines = 42 rows × 2 = 84 (2P). Equal object counts per layer (5,160) were the first hint of 120 trackers each.
+- **Strings from the printed module total**: 140,812 / 28 = 5,029 exactly; 84-module trackers carry 3 strings and 56-module ones 2. Geometry is derived (thirds of the tracker).
+- **Placing a printed coordinate that does not say which point it is**: the location sheet drew a circle around the plant. Register that sheet to the layout through symbols both draw (the 14 CT symbols: 0.1–0.7 m residuals) and take the circle centre. Check the bin size when locating symbols on a histogram: 0.25 pt bins read as 1 pt put the plant 7 km away.
+- **A dashed plant contour does not close into a boundary**: closing the dashes merged it with the floodplain. Export the contour as drawn lines.
+- **Unzip on the Mac cannot overwrite** (deletion is off): write over an existing file with `unzip -p zip member > file` instead.
+
 ## 5c. Rolling the hierarchy up from its children
 
 - **Rule:** if the finest drawn level names its parents, every parent level must exist in the output (area + record point), but only build what is missing. Nothing existing is redrawn.
 - `pvgeo/rollup.py`: area = union of the children closed at just over half the typical row gap, clipped off other groups' children, never overlapping. The row gap is measured between blocks of children merged at 0.35 m (strings inside a table can sit 5–10 cm apart; a "nearest non-touching sibling" test picks the string two rows over instead of the next row). Measured: the route A site 1.10 m, Arcos 2 1.9 m, the route D site 2.2 m, Huévar I 2.8 m.
 - **Match parents on the ids the children carry.** the route D site strings carry inverter and combiner but not station; matching on the full chain would have duplicated every combiner.
+- **Use the 90th-percentile row gap, not the median**, and cap at 5 m: Casilla's 3.85 m and 4.13 m trackers on a 9.1 m pitch leave gaps of 4.97 and 5.25 m, and the median left every station area in pieces (8 to 22 parts; 1–2 after).
 - **Keep combiner areas even when a combiner has one circuit**; only a station that is a single inverter is skipped as a duplicate.
 - Applied to the four sites: the route A site gained about 20 station areas (two inverter fields each, mostly two parts); Arcos 2 and Huévar I had nothing missing (one inverter per station); the route D site already had circuit, combiner and inverter areas.
 
@@ -133,4 +142,5 @@ Learned on the route D site (ten *Cableado corriente continua (BT) CTIN-nn* shee
 | Route A example | As-built layout, 1 sheet, about 500 layers | A | about 20 stations, 40 inverters, 400 combiners, 9,000 strings, 200,000 modules. Two CAD layer mix-ups fixed. Provisional placement from a published site centre. |
 | Arcos 2, Puerto Real, 47 MWdc | Project PDF pp. 58–71 (PVcase stringing) + p. 55 layout + pp. 82–85 crossings | B | 14 CT, 224 DCB, 3,616 strings, 94,016 modules (= printed). 0.48 m RMSE in EPSG:25829 from three printed crossings. |
 | Huévar I, Sevilla, 50 MWp | PAL project PDF pp. 197–207, flattened (layout p. 199 + grounding plan p. 200) | C | 14 CT, 251 combiner boxes (one hidden under a label), 2,448 trackers (= printed per block), 4,896 derived strings, 127,296 modules. Provisional placement from the memoria's plant coordinate (EPSG:25829). |
+| Casilla Solar PV, Valencina de la Concepción (Sevilla), 49.3 MWp | Anexo urbanístico rev1 (37 pp.), layout on p. 37, 1:6,500, 147 layers | A | 14 CT, 1,678 trackers (= printed), 140,784 modules (printed 140,812: one string short), 5,028 derived strings of 28, 14 derived station areas. No inverters or combiner boxes drawn. Provisional placement: printed coordinate at the location-circle centre (EPSG:25829). |
 | Route D example | Ten as-built DC cabling sheets, one per CTIN, 1:1,200 + key plan; six AutoCAD, four Distiller re-prints | D | 10 CTIN, about 160 level-1 boards, about 300 circuits (= circuit tables, checked by eye where OCR'd), about 2,000 tables / fused taps (about 200 per CTIN), about 86,000 modules, about 4,300 derived strings. Four leader-versus-table conflicts in the drawings logged. Provisional placement on the GEM plant point. |

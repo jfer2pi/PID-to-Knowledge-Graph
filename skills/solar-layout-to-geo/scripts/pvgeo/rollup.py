@@ -38,7 +38,7 @@ def finest_children(layers: dict) -> tuple[str, list]:
     return "", []
 
 
-def closing_radius(children: list, key_of, cap: float = 3.0) -> float:
+def closing_radius(children: list, key_of, cap: float = 5.0) -> float:
     """just over half the typical gap between neighbouring rows of the same group.
 
     Children closer than 0.35 m (strings inside one table, tables along a row) are merged into blocks first. For each block, the nearest
@@ -72,10 +72,11 @@ def closing_radius(children: list, key_of, cap: float = 3.0) -> float:
                 gx.append(bx)
             if by is not None:
                 gy.append(by)
-    meds = [float(np.median(v)) for v in (gx, gy) if v]
+    # 90th percentile, not the median: gaps vary with table width (3.85 and 4.13 m trackers on one 9.1 m pitch)
+    meds = [float(np.percentile(v, 90)) for v in (gx, gy) if v]
     if not meds:
         return 0.5
-    return float(min(cap, max(0.2, 0.52 * max(meds))))
+    return float(min(cap, max(0.2, 0.53 * max(meds))))
 
 
 def _group_key(p: dict, level: str, use=None) -> tuple | None:
