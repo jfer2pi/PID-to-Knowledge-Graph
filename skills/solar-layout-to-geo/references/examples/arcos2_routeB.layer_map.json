@@ -1,0 +1,22 @@
+{
+  "mode": "labels",
+  "roles": [
+    {"role": "string_label", "pattern": "^PVcase Stringing Numbers$", "text": "(?P<station>\\d+)-(?P<cb>\\d+)-(?P<string>\\d+)"},
+    {"role": "combiner_label", "pattern": "^PVcase Device Numbering$", "text": "DCB\\s*(?P<station>\\d+)-(?P<cb>\\d+)"},
+    {"role": "string", "pattern": "^PVcase Strings$"},
+    {"role": "module", "pattern": "^PVcase Modules$"},
+    {"role": "combiner", "pattern": "^PVcase DC Combiners$"},
+    {"role": "inverter", "pattern": "^PVcase Central Inverters$"},
+    {"role": "homerun_cable", "pattern": "^PVcase DC Cables \\(Combiner - Central inverter\\)$"},
+    {"role": "fence", "pattern": "^PVcase Fence$"},
+    {"role": "access_road", "pattern": "^PVcase Road$"},
+    {"role": "mv_cable", "pattern": "^Zanja MT$"},
+    {"role": "stream", "pattern": "^HS1_L_NAT$"}
+  ],
+  "naming": {
+    "station": "CT{station:02d}",
+    "inverter": "INV{station:02d}",
+    "combiner": "DCB {station}-{cb}",
+    "string": "{station}-{cb}-{string}"
+  }
+}

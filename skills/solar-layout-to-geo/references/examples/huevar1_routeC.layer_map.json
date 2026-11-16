@@ -1,0 +1,159 @@
+{
+  "mode": "styles",
+  "key_page": 199,
+  "scale": {
+    "ratio": 3000
+  },
+  "register_by": "station_symbol",
+  "styles": [
+    {
+      "role": "tracker",
+      "page": 199,
+      "type": "s",
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "size_pt": [
+        4.3,
+        25.2
+      ],
+      "tol": 0.3,
+      "items": "qu"
+    },
+    {
+      "role": "station_symbol",
+      "page": [
+        199,
+        200
+      ],
+      "type": "fs",
+      "fill": [
+        0,
+        0,
+        0
+      ],
+      "size_pt": [
+        5.45,
+        12.9
+      ],
+      "tol": 0.35
+    },
+    {
+      "role": "combiner",
+      "page": 200,
+      "type": "fs",
+      "fill": [
+        0,
+        0,
+        0
+      ],
+      "size_pt": [
+        9.0,
+        4.75
+      ],
+      "tol": 0.3,
+      "n_items": 24,
+      "capacity": 10,
+      "name": "Caja String 20 entradas"
+    },
+    {
+      "role": "combiner",
+      "page": 200,
+      "type": "fs",
+      "fill": [
+        1,
+        0,
+        0
+      ],
+      "size_pt": [
+        8.5,
+        4.75
+      ],
+      "tol": 0.3,
+      "n_items": 30,
+      "capacity": 9,
+      "name": "Caja String 18 entradas"
+    },
+    {
+      "role": "block_outline",
+      "page": 199,
+      "type": "fs",
+      "min_size_pt": 150,
+      "saturated_or_black": true,
+      "exclude_fills": [
+        [
+          1,
+          0,
+          0.247
+        ],
+        [
+          0.722,
+          0.541,
+          0.361
+        ],
+        [
+          0,
+          0.216,
+          0.867
+        ]
+      ]
+    },
+    {
+      "role": "block_label",
+      "page": 199,
+      "text": "^\\s*(?P<station>\\d{2})(?P<suffix>\\*?)\\s*$"
+    },
+    {
+      "role": "station_label",
+      "page": 199,
+      "text": "INV\\.(?P<station>\\d{2})"
+    },
+    {
+      "role": "fence",
+      "page": 199,
+      "type": "fs",
+      "fill": [
+        1,
+        0,
+        0.247
+      ]
+    },
+    {
+      "role": "access_road",
+      "page": 199,
+      "type": "fs",
+      "fill": [
+        0.722,
+        0.541,
+        0.361
+      ]
+    },
+    {
+      "role": "stream",
+      "page": 199,
+      "type": "fs",
+      "fill": [
+        0,
+        0.216,
+        0.867
+      ]
+    }
+  ],
+  "expect_trackers": {
+    "*": 162,
+    "": 180
+  },
+  "strings": {
+    "per_tracker": 2,
+    "modules_per_string": 26
+  },
+  "naming": {
+    "station": "CT{station:02d}",
+    "inverter": "INV{station:02d}",
+    "combiner": "INV{station:02d}-C{cb:02d}",
+    "string": "INV{station:02d}-C{cb:02d}-S{string:02d}",
+    "table": "INV{station:02d}-T{table:05d}"
+  }
+}

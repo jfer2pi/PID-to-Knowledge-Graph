@@ -1,0 +1,7 @@
+pymupdf>=1.24       # vector paths with their CAD layer (AGPL-3.0: check before commercial redistribution)
+pypdfium2>=4.30     # rendering for preview.py
+pillow>=10.0
+shapely>=2.0
+pyproj>=3.6
+pyshp>=2.3
+numpy>=1.24

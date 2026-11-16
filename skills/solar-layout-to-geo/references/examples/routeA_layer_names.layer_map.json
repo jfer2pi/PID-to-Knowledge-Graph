@@ -1,0 +1,100 @@
+{
+  "page": 1,
+  "scale": {
+    "ratio": null,
+    "m_per_pt": null,
+    "_note": "auto: PDF viewport measure 0.88189 m/pt; agrees with the scale bar (125 m = 141.72 pt -> 0.8820)"
+  },
+  "roles": [
+    {
+      "role": "module",
+      "pattern": "^PVE_INV(?P<station>\\d+)-(?P<inv>\\d+)-Combiner-Box-(?P<cb>\\d+)$"
+    },
+    {
+      "role": "table",
+      "pattern": "^SADEF_(?!.*PILE).*TABLE"
+    },
+    {
+      "role": "inverter_label",
+      "pattern": "^PVE_Inverter-(?P<station>\\d+)(-(?P<inv>\\d+))?$"
+    },
+    {
+      "role": "site_boundary",
+      "pattern": "Redline-Boundary"
+    },
+    {
+      "role": "fence",
+      "pattern": "(?i)fence"
+    },
+    {
+      "role": "access_road",
+      "pattern": "(?i)access-roads?$"
+    },
+    {
+      "role": "trench",
+      "pattern": "(?i)^PVS_Trench"
+    },
+    {
+      "role": "mv_cable",
+      "pattern": "(?i)cables? MV"
+    },
+    {
+      "role": "cctv",
+      "pattern": "(?i)CCTV-Camera"
+    },
+    {
+      "role": "weather_station",
+      "pattern": "(?i)WeatherStation"
+    },
+    {
+      "role": "comms",
+      "pattern": "(?i)COMMS_Box"
+    }
+  ],
+  "strings": {
+    "modules_per_string": "auto",
+    "_note": "auto = modal number of modules per module-row across full tables",
+    "order": "rows_top_down"
+  },
+  "stations": {
+    "method": "stacked_tags",
+    "override_file": "stations.json"
+  },
+  "naming": {
+    "station": "ST{station:02d}",
+    "inverter": "INV{station:02d}-{inv:02d}",
+    "combiner": "INV{station:02d}-{inv:02d}-CB{cb:02d}",
+    "string": "INV{station:02d}-{inv:02d}-CB{cb:02d}-S{string:02d}",
+    "table": "T{table:05d}"
+  },
+  "reassign": [
+    {
+      "layer_pattern": "PVE_INV02-1-Combiner-Box-2",
+      "bbox_norm": [
+        0.3995,
+        0.79,
+        0.4364,
+        0.8029
+      ],
+      "to": {
+        "station": 21,
+        "inv": 1,
+        "cb": 2
+      }
+    },
+    {
+      "layer_pattern": "PVE_INV02-2-Combiner-Box-6",
+      "bbox_norm": [
+        0.3995,
+        0.8535,
+        0.4364,
+        0.8665
+      ],
+      "to": {
+        "station": 21,
+        "inv": 2,
+        "cb": 6
+      }
+    }
+  ]
+}

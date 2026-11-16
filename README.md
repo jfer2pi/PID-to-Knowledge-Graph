@@ -4,6 +4,8 @@ By Scott Duncan. Reach me on [LinkedIn](https://www.linkedin.com/in/s-r-duncan/)
 
 **Turn P&ID drawings into a process knowledge graph that an LLM can reason over.**
 
+> **Fork addition: solar layouts.** This fork adds a second skill, [`solar-layout-to-geo`](skills/solar-layout-to-geo/README.md), by Fernando Rodríguez with Claude's help. It turns CAD-exported solar site layout PDFs into a georeferenced inverter > combiner > string hierarchy (GeoJSON, KMZ, Shapefile), reusing this skill's approach of deterministic scripts plus Claude's visual checks.
+
 `pid-to-kg` is a [Claude skill](https://code.claude.com/docs/en/skills) that reads piping and instrumentation diagrams (P&IDs) and PFDs from PDF and builds a knowledge graph of the process. The PDFs can be digital (exported from CAD) or scanned. The graph captures:
 
 - **Process flow:** what is upstream and downstream of every tank, pump, valve and pipe segment.
