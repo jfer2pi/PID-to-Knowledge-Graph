@@ -1,6 +1,6 @@
 # Lessons from real documents
 
-Read this before starting on a new site. It holds what the first five sites taught, as rules to apply and as checks for what went wrong.
+Read this before starting on a new site. It holds what the first seven sites taught, as rules to apply and as checks for what went wrong.
 
 ## Contents
 1. Triage: which route a document needs
@@ -9,6 +9,8 @@ Read this before starting on a new site. It holds what the first five sites taug
 4. Route B lessons (labelled multi-sheet packages)
 5. Route C notes (flattened sheets)
 5b. Route D lessons (per-station cabling sheets with leaders and a key plan)
+5c. Rolling the hierarchy up from its children
+5d. Colour-fill groups (Bufali-Palomar) and labelled boxes on a flattened sheet (Huévar II)
 6. Georeferencing lessons
 7. Performance and environment
 8. Site log
@@ -112,6 +114,18 @@ Learned on the route D site (ten *Cableado corriente continua (BT) CTIN-nn* shee
 - **Keep combiner areas even when a combiner has one circuit**; only a station that is a single inverter is skipped as a duplicate.
 - Applied to the four sites: the route A site gained about 20 station areas (two inverter fields each, mostly two parts); Arcos 2 and Huévar I had nothing missing (one inverter per station); the route D site already had circuit, combiner and inverter areas.
 
+## 5d. Labelled stringing sheets with colour fills (Bufali-Palomar) and printed box labels on a flattened sheet (Huévar II)
+
+- **Group membership can be a colour fill rather than a layer.** At Bufali-Palomar the 40 `ND_CAJA_AGRUPACION_n` layers held only one legend stroke each; the group colours on the stringing sheets were raster images. Sample each structure's colour on a render (skip blue wiring, black and white), group same-colour structures into connected groups (centres within a row pitch), and match groups to the labels one to one on distance plus a count penalty. A group split by an aisle comes back as two components: merge leftovers into the label that already holds that colour.
+- **The labels carry the check.** `area.inv.n STRINGS-SBCxx` gives each box's string count: all 40 matched, and the per-inverter sums matched the summary table. The same check exposed a typo: SBC32/33 printed `2.1.17` on the inverter 2.2 sheet. Trust the sheet and the table, and log the label.
+- **Register sheets of one CAD model by a translation vote on structure centres** (pairwise differences binned at 1 m, then refined on nearest neighbours): 3 to 12 cm on six sheets at 1:500 and 1:750 onto the 1:2,000 layout. Viewport scales make it a pure translation.
+- **A viewport `/BBox` is not a reliable filter.** On p. 238 a third of the structures lay outside the model viewport's box; filter by size and drop far-off legend samples instead.
+- **Rotated pages (270°)**: keep geometry unrotated, convert once with `page.rotation_matrix`, and filter insets in displayed coordinates.
+- **Printed station coordinates rounded to the metre** gave a 0.93 m RMSE three-point fit with scale 0.9997 and 0.03° rotation: good enough to call surveyed, and the residual floor is the rounding.
+- **Flattened sheet with every box labelled (Huévar II p. 199)**: the boxes, their `X-Y` names and the 9/10-tracker groups were all on the layout sheet, unlike Huévar I where boxes had to come from the grounding plan. The groups are dashed rectangles drawn as small filled dash pieces (0.8 x 3 pt), not as dashed strokes: rasterise the pieces plus the block outlines, label the empty cells, and give each tracker the majority cell under its rectangle (tracker centres sat on a dash line 887 times). Each box takes the cell holding its label. A capacity-constrained assignment with a heavy penalty for leaving the cell put 2,363 of 2,448 trackers in their box's group; plain distance gave 65 split groups and an anisotropic distance was worse.
+- **Sister projects can share a memoria.** Huévar I and II have the same text and module count but different layouts and plant coordinates. Compare the drawings before reusing anything.
+- **Mediterráneo IV (Monforte del Cid), triage only**: flattened, many fixed-structure types, eight CT coordinates printed (strong georeference) but string inverters and their strings drawn only for one study block (CT4.6). Not processed yet.
+
 ## 6. Georeferencing lessons
 
 - **Look for surveyed points printed in the document** and find them on the drawing as feature intersections (`match_points.py`). At Arcos 2, "cruce zanja-DPH" meant the DC home-run trench or MV trench crossing a stream. That gave three automatic GCPs at 0.48 m RMSE.
@@ -144,3 +158,5 @@ Learned on the route D site (ten *Cableado corriente continua (BT) CTIN-nn* shee
 | Huévar I, Sevilla, 50 MWp | PAL project PDF pp. 197–207, flattened (layout p. 199 + grounding plan p. 200) | C | 14 CT, 251 combiner boxes (one hidden under a label), 2,448 trackers (= printed per block), 4,896 derived strings, 127,296 modules. Provisional placement from the memoria's plant coordinate (EPSG:25829). |
 | Casilla Solar PV, Valencina de la Concepción (Sevilla), 49.3 MWp | Anexo urbanístico rev1 (37 pp.), layout on p. 37, 1:6,500, 147 layers | A | 14 CT, 1,678 trackers (= printed), 140,784 modules (printed 140,812: one string short), 5,028 derived strings of 28, 14 derived station areas. No inverters or combiner boxes drawn. Provisional placement: printed coordinate at the location-circle centre (EPSG:25829). |
 | Route D example | Ten as-built DC cabling sheets, one per CTIN, 1:1,200 + key plan; six AutoCAD, four Distiller re-prints | D | 10 CTIN, about 160 level-1 boards, about 300 circuits (= circuit tables, checked by eye where OCR'd), about 2,000 tables / fused taps (about 200 per CTIN), about 86,000 modules, about 4,300 derived strings. Four leader-versus-table conflicts in the drawings logged. Provisional placement on the GEM plant point. |
+| PS IM2 Bufali-Palomar I y II, Bufali (Valencia), 11.3 MWp | GVA project PDF pp. 238-244: layout 1:2,000 + one stringing sheet per inverter, 123 layers, pages rotated 270° | A/B (layer structures, colour-fill groups, printed SBC labels) | 2 CIT, 6 inverters, 40 boxes (all drawn), 655 strings = structures, 19,650 modules: all equal to print. Similarity fit on 3 printed points, 0.93 m RMSE (EPSG:25830). |
+| Huévar II, Huévar del Aljarafe (Sevilla), 49.65 MWp | Junta project PDF p. 199, 1:3,500, flattened | C + printed box labels + dashed group cells | 14 CT, 252 named boxes, 2,448 trackers (= printed per subcampo), 127,296 modules; tracker-to-box derived (2,363 inside their group). Provisional one-point placement from the memoria (EPSG:25829). |
